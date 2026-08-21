@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>nonomo — no noisy motors</title>
+<meta name="description" content="nonomo is an international movement against motor noise, starting with loud motorcycle and moped exhausts. Sign the pledge.">
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --hairline:       #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --accent:         #e34948;
+    --accent-ink:     #ffffff;
+    --card:           #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --hairline:       #2c2c2a;
+      --border:         rgba(255,255,255,0.10);
+      --accent:         #e66767;
+      --accent-ink:     #1a1a19;
+      --card:           #1f1f1e;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav.top { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
+  .nav-links { display: flex; align-items: center; gap: 20px; }
+  .nav-link { text-decoration: none; color: var(--text-secondary); font-weight: 600; font-size: 14px; }
+  nav.top a.cta {
+    background: var(--accent); color: var(--accent-ink); text-decoration: none;
+    padding: 9px 16px; border-radius: 100px; font-weight: 600; font-size: 14px;
+  }
+
+  /* Hero */
+  header.hero { padding: 64px 0 40px; }
+  header.hero h1 {
+    font-size: clamp(40px, 7vw, 72px); line-height: 1.03; letter-spacing: -0.03em;
+    margin: 0 0 20px; font-weight: 800;
+  }
+  header.hero h1 .accent { color: var(--accent); }
+  header.hero p.lede {
+    font-size: clamp(17px, 2.4vw, 20px); color: var(--text-secondary); max-width: 620px; margin: 0 0 32px;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-teaser {
+    margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    color: var(--text-secondary); font-size: 14px; font-weight: 600;
+  }
+  .hero-teaser-avatars { display: flex; }
+  .hero-teaser-avatars .mini-avatar {
+    width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--page);
+    margin-left: -8px; display: flex; align-items: center; justify-content: center;
+    color: #ffffff; font-size: 10px; font-weight: 700;
+  }
+  .hero-teaser-avatars .mini-avatar:first-child { margin-left: 0; }
+  .hero-teaser:hover { color: var(--text-primary); }
+  .btn-primary {
+    background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 700;
+    padding: 14px 26px; border-radius: 100px; font-size: 16px; border: none; cursor: pointer;
+  }
+  .btn-secondary {
+    background: transparent; color: var(--text-primary); text-decoration: none; font-weight: 600;
+    padding: 13px 24px; border-radius: 100px; font-size: 16px; border: 1px solid var(--border);
+  }
+
+  /* Section rhythm */
+  section { padding: 56px 0; border-top: 1px solid var(--hairline); }
+  section h2 {
+    font-size: clamp(24px, 3.4vw, 32px); letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 800;
+  }
+  section p { color: var(--text-secondary); font-size: 17px; max-width: 680px; }
+  section p + p { margin-top: 14px; }
+
+  /* Stat tiles */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline);
+    border: 1px solid var(--hairline); border-radius: 16px; overflow: hidden; margin-top: 28px; }
+  .stat { background: var(--card); padding: 24px 18px; }
+  .stat .value { font-size: clamp(26px, 4vw, 34px); font-weight: 800; letter-spacing: -0.02em; }
+  .stat .label { color: var(--text-muted); font-size: 13px; margin-top: 6px; line-height: 1.35; }
+  .stats-note { color: var(--text-muted); font-size: 13px; margin-top: 14px; }
+  @media (max-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Manifesto */
+  .manifesto-body p { color: var(--text-primary); font-size: 18px; max-width: 700px; }
+  .manifesto-body p.emph { font-weight: 700; }
+  .manifesto-body p.quiet { color: var(--text-secondary); font-size: 16px; }
+  .manifesto-full { margin-top: 8px; }
+  .manifesto-full summary {
+    cursor: pointer; font-weight: 700; color: var(--accent); font-size: 15px; list-style: none;
+  }
+  .manifesto-full summary::-webkit-details-marker { display: none; }
+  .manifesto-full summary::after { content: " →"; }
+  .manifesto-full[open] summary::after { content: " ↑"; }
+
+  /* Wins */
+  .wins { display: grid; gap: 14px; margin-top: 24px; }
+  .win { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+  .win .city { font-weight: 700; font-size: 15px; }
+  .win .desc { color: var(--text-secondary); font-size: 15px; margin-top: 4px; }
+
+  /* Pledge form */
+  .pledge-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; margin-top: 8px;
+  }
+  form.pledge { display: grid; gap: 12px; max-width: 480px; }
+  form.pledge label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  form.pledge input, form.pledge textarea, form.pledge select {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--surface-1); color: var(--text-primary); font-size: 15px; font-family: inherit;
+  }
+  form.pledge textarea { resize: vertical; min-height: 70px; }
+  form.pledge select { appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23898781'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; padding-right: 38px;
+  }
+  form.pledge select:invalid { color: var(--text-muted); }
+  form.pledge .hp-field { position: absolute; left: -9999px; top: -9999px; }
+  .pledge-note { color: var(--text-muted); font-size: 13px; margin-top: 14px; }
+  .pledge-error { color: var(--accent); font-size: 14px; margin-top: 10px; display: none; }
+  .pledge-success { display: none; text-align: center; padding: 20px 0; }
+  .pledge-success .check {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 22px; font-weight: 800;
+  }
+  .pledge-success h3 { margin: 0 0 6px; font-size: 20px; }
+  .pledge-success p { color: var(--text-secondary); font-size: 15px; max-width: none; }
+
+  /* Wall of pledges — feed style */
+  .wall-section {
+    background: color-mix(in srgb, var(--accent) 6%, var(--page));
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+  }
+  .wall-heading { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 0; }
+  .wall-heading h2 { margin: 0; }
+  .wall-pill {
+    background: var(--accent); color: var(--accent-ink); font-size: 12.5px; font-weight: 700;
+    padding: 5px 12px; border-radius: 100px; white-space: nowrap;
+  }
+  .wall { display: grid; gap: 12px; margin-top: 24px; max-width: 640px; }
+  .wall-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .wall-item .avatar {
+    width: 44px; height: 44px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    color: #ffffff; font-weight: 700; font-size: 15px; letter-spacing: -0.02em;
+  }
+  .wall-item .body { min-width: 0; flex: 1; }
+  .wall-item .headline { font-size: 14.5px; line-height: 1.4; }
+  .wall-item .headline .who { font-weight: 700; color: var(--text-primary); }
+  .wall-item .headline .verb { color: var(--text-secondary); }
+  .wall-item .headline .where { font-weight: 700; color: var(--text-primary); }
+  .wall-item .notes {
+    color: var(--text-primary); font-size: 15px; margin-top: 6px; line-height: 1.45;
+  }
+  .wall-item .meta { color: var(--text-muted); font-size: 12.5px; margin-top: 8px; display: flex; gap: 8px; align-items: center; }
+  .wall-item .meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+  .wall-empty, .wall-loading { color: var(--text-muted); font-size: 15px; margin-top: 20px; }
+  .wall-count { color: var(--text-muted); font-size: 13px; margin-top: 14px; }
+
+  footer { padding: 40px 0 60px; border-top: 1px solid var(--hairline); }
+  footer p { color: var(--text-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="top">
+    <div class="brand"><span class="dot"></span> nonomo</div>
+    <div class="nav-links">
+      <a class="nav-link" href="#wall">Voices</a>
+      <a class="cta" href="#pledge">Join the pledge</a>
+    </div>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>No noisy<br><span class="accent">motors.</span></h1>
+    <p class="lede">nonomo is an international movement against motor noise — starting with the loudest, most avoidable offender: motorcycles and mopeds modified to be as loud as possible.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#pledge">Sign the pledge</a>
+      <a class="btn-secondary" href="#manifesto">Read the manifesto</a>
+    </div>
+    <a class="hero-teaser" href="#wall" id="heroTeaser" style="display:none;">
+      <span class="hero-teaser-avatars" id="heroTeaserAvatars"></span>
+      <span id="heroTeaserText"></span>
+    </a>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <h2>It's not a nuisance. It's a public health problem.</h2>
+    <p>Environmental noise is one of the most under-addressed pollutants in cities today — and modified motorcycle and moped exhausts are among the loudest, most deliberate sources of it.</p>
+    <div class="stats">
+      <div class="stat"><div class="value">95M+</div><div class="label">EU citizens exposed to harmful road traffic noise levels</div></div>
+      <div class="stat"><div class="value">41,000</div><div class="label">new heart disease cases per year linked to noise exposure</div></div>
+      <div class="stat"><div class="value">12,000</div><div class="label">premature deaths per year attributed to environmental noise</div></div>
+      <div class="stat"><div class="value">18M</div><div class="label">people highly annoyed by transport noise across Europe</div></div>
+    </div>
+    <p class="stats-note">Source: European Environment Agency, <a href="https://www.eea.europa.eu/en/analysis/publications/zero-pollution/health/noise-pollution-and-health" target="_blank" rel="noopener">"Noise pollution and health."</a></p>
+  </div>
+</section>
+
+<section id="manifesto">
+  <div class="wrap">
+    <h2>The manifesto</h2>
+    <div class="manifesto-body">
+      <p class="emph">There is a sound that follows you indoors. It rattles windows at 11pm and wakes children who did nothing to deserve it.</p>
+      <p class="quiet">It is not traffic. It is not the city. It is one motorcycle, or one moped, with a pipe modified to be as loud as possible, ridden by someone who has decided that everyone within four hundred metres will listen to their engine whether they want to or not.</p>
+      <p class="quiet">We are not anti-motorcycle. We are not anti-rider. We are against the small, deliberate choice — an aftermarket exhaust, a removed baffle, a twist of the throttle outside a bedroom window at midnight — that turns a private vehicle into a public disturbance. That choice is not freedom. It is one person's convenience purchased with everyone else's peace.</p>
+      <details class="manifesto-full">
+        <summary>Read the full manifesto</summary>
+        <div style="margin-top:18px;">
+          <p class="quiet">Motorcycles and mopeds are a disproportionate part of the noise problem — not because there are more of them, but because a single loud motorcycle can be louder than dozens of ordinary cars combined, and because so many riders modify their exhausts specifically to be louder than the law allows. Legal limits already exist in most countries, generally somewhere between 80 and 95 decibels depending on jurisdiction. Modified pipes routinely blow past them. Enforcement, until recently, has mostly meant nothing at all.</p>
+          <p class="quiet">That is starting to change, and it proves the fight is winnable. Cities are now measuring and fining noise automatically — proof that the tools already exist. What's been missing is the will to use them everywhere, consistently.</p>
+          <p class="quiet"><strong>nonomo exists to build that will.</strong> We are starting small and specific, not broad and vague: loud motorcycle and moped exhausts, in named streets and named cities, backed by the ordinances that mostly already exist and mostly go unenforced. We are not asking anyone to invent new laws first. We are asking cities to enforce the ones they have, and asking riders to accept a simple standard: modify your bike for performance, for comfort, for style — not to make yourself impossible to ignore.</p>
+          <p class="quiet"><strong>What we're asking of you:</strong> Sign the pledge. Add your voice and your country, so this reads as the international movement it's meant to be, not one person shouting into the wind. If you're a rider who agrees loud pipes aren't a personality, say so publicly; you are the most credible messenger we have.</p>
+          <p class="quiet">We are not trying to silence the road. We are trying to make it possible to sleep with your window open, hear a conversation on a terrace, and walk down a street without being ambushed by an engine that was made loud on purpose. No noisy motors. That's the whole idea. Join us.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="wrap">
+    <h2>It's already being won — in pieces</h2>
+    <p>No new technology or science is required. Cities that decide to act already have what they need.</p>
+    <div class="wins">
+      <div class="win">
+        <div class="city">Paris, France</div>
+        <div class="desc">Deployed "Medusa" sound-sensor cameras that automatically detect and fine vehicles exceeding local noise limits.</div>
+      </div>
+      <div class="win">
+        <div class="city">Sharjah, UAE</div>
+        <div class="desc">Noise radars caught 628 vehicles exceeding 95 decibels in a single year, with fines and license points attached.</div>
+      </div>
+      <div class="win">
+        <div class="city">Tyrol, Austria</div>
+        <div class="desc">Police run spot checks on popular motorcycle routes, with on-the-spot fines for bikes over the limit.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="wall" class="wall-section">
+  <div class="wrap">
+    <div class="wall-heading">
+      <h2>Voices so far</h2>
+      <span class="wall-pill" id="wallPill" style="display:none;"></span>
+    </div>
+    <p>Real people, from around the world, supporting the cause. Names are shown as first name + last initial, only the country is shown, and emails are partially masked — never anything more precise than that.</p>
+    <div class="wall" id="wallList">
+      <p class="wall-loading">Loading…</p>
+    </div>
+    <p class="wall-count" id="wallCount"></p>
+  </div>
+</section>
+
+<section id="pledge">
+  <div class="wrap">
+    <h2>Join nonomo</h2>
+    <p>Sign the pledge against noisy motors.</p>
+    <div class="pledge-card">
+      <form class="pledge" id="pledgeForm">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div>
+          <label for="location">Country</label>
+          <select id="location" name="location" required>
+            <option value="" disabled selected>Select your country</option>
+          </select>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label for="notes">Anything else?</label>
+          <textarea id="notes" name="notes" placeholder="Optional"></textarea>
+        </div>
+        <div class="hp-field" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" class="btn-primary" id="pledgeSubmit" style="margin-top:6px;">Sign the pledge</button>
+        <p class="pledge-error" id="pledgeError"></p>
+      </form>
+      <div class="pledge-success" id="pledgeSuccess">
+        <div class="check">✓</div>
+        <h3>You're in.</h3>
+        <p>Thanks for signing — your voice now shows up in the wall above (with your details kept private).</p>
+      </div>
+      <p class="pledge-note" id="pledgeNote">Your name and country may appear publicly above (name shown as first name + last initial, email partially masked). We only ever ask for your country — never a city, street, or address — and we never publish your full email or contact details.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>nonomo — no noisy motors. An international movement against motor noise, starting with loud motorcycle and moped exhausts.</p>
+  </div>
+</footer>
+
+<script>
+  // Fixed list, also enforced server-side — the pledge only ever asks for a country,
+  // never anything more precise, so the two lists must match exactly.
+  var COUNTRIES = ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo (DRC)","Congo (Republic of the)","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe","Other"];
+
+  (function populateCountries() {
+    var select = document.getElementById('location');
+    COUNTRIES.forEach(function (c) {
+      var opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      select.appendChild(opt);
+    });
+  })();
+
+  var form = document.getElementById('pledgeForm');
+  var errorEl = document.getElementById('pledgeError');
+  var submitBtn = document.getElementById('pledgeSubmit');
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str == null ? '' : str;
+    return div.innerHTML;
+  }
+
+  function timeAgo(iso) {
+    var diff = Date.now() - new Date(iso).getTime();
+    var mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + 'm ago';
+    var hours = Math.floor(mins / 60);
+    if (hours < 24) return hours + 'h ago';
+    var days = Math.floor(hours / 24);
+    if (days < 30) return days + 'd ago';
+    return new Date(iso).toLocaleDateString();
+  }
+
+  // Validated categorical palette (dataviz skill), yellow dropped — too light for white avatar text.
+  var AVATAR_COLORS = ['#2a78d6', '#eb6834', '#1baf7a', '#e87ba4', '#008300', '#4a3aa7', '#e34948'];
+  function avatarColor(name) {
+    var hash = 0;
+    for (var i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+    return AVATAR_COLORS[hash % AVATAR_COLORS.length];
+  }
+  function initials(name) {
+    var parts = String(name).trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function updateTeasers(pledges) {
+    var pill = document.getElementById('wallPill');
+    var teaser = document.getElementById('heroTeaser');
+    var teaserAvatars = document.getElementById('heroTeaserAvatars');
+    var teaserText = document.getElementById('heroTeaserText');
+
+    if (pledges.length === 0) {
+      pill.style.display = 'none';
+      teaser.style.display = 'none';
+      return;
+    }
+
+    pill.textContent = pledges.length + (pledges.length === 1 ? ' voice' : ' voices');
+    pill.style.display = 'inline-block';
+
+    var preview = pledges.slice(0, 4);
+    teaserAvatars.innerHTML = preview.map(function (p) {
+      return '<span class="mini-avatar" style="background:' + avatarColor(p.name) + '">' + escapeHtml(initials(p.name)) + '</span>';
+    }).join('');
+    teaserText.textContent = pledges.length + (pledges.length === 1 ? ' person has' : ' people have') + ' already signed — see who';
+    teaser.style.display = 'inline-flex';
+  }
+
+  function loadWall() {
+    var listEl = document.getElementById('wallList');
+    var countEl = document.getElementById('wallCount');
+    fetch('/.netlify/functions/pledges')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var pledges = data.pledges || [];
+        updateTeasers(pledges);
+        if (pledges.length === 0) {
+          listEl.innerHTML = '<p class="wall-empty">No pledges yet — be the first to sign below.</p>';
+          countEl.textContent = '';
+          return;
+        }
+        listEl.innerHTML = pledges.map(function (p) {
+          var notesHtml = p.notes ? '<div class="notes">' + escapeHtml(p.notes) + '</div>' : '';
+          return (
+            '<div class="wall-item">' +
+              '<div class="avatar" style="background:' + avatarColor(p.name) + '">' + escapeHtml(initials(p.name)) + '</div>' +
+              '<div class="body">' +
+                '<div class="headline">' +
+                  '<span class="who">' + escapeHtml(p.name) + '</span> ' +
+                  '<span class="verb">signed the pledge from</span> ' +
+                  '<span class="where">' + escapeHtml(p.location) + '</span>' +
+                '</div>' +
+                notesHtml +
+                '<div class="meta"><span>' + escapeHtml(p.email) + '</span><span class="dot"></span><span>' + timeAgo(p.createdAt) + '</span></div>' +
+              '</div>' +
+            '</div>'
+          );
+        }).join('');
+        countEl.textContent = pledges.length + (pledges.length === 1 ? ' person has' : ' people have') + ' signed so far.';
+      })
+      .catch(function () {
+        listEl.innerHTML = '<p class="wall-empty">Couldn\'t load pledges right now — refresh to try again.</p>';
+      });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errorEl.style.display = 'none';
+
+    var payload = {
+      name: document.getElementById('name').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      notes: document.getElementById('notes').value.trim(),
+      website: document.getElementById('website').value // honeypot
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Signing…';
+
+    fetch('/.netlify/functions/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        if (!res.ok) return res.json().then(function (d) { throw new Error(d.error || 'Something went wrong.'); });
+        return res.json();
+      })
+      .then(function () {
+        form.style.display = 'none';
+        document.getElementById('pledgeNote').style.display = 'none';
+        document.getElementById('pledgeSuccess').style.display = 'block';
+        loadWall();
+      })
+      .catch(function (err) {
+        errorEl.textContent = err.message || 'Something went wrong — please try again.';
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign the pledge';
+      });
+  });
+
+  loadWall();
+</script>
+
+</body>
+</html>

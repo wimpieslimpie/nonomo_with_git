@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>nonomo — admin</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1: #fcfcfb; --page: #f9f9f7; --text-primary: #0b0b0b; --text-secondary: #52514e;
+    --text-muted: #898781; --hairline: #e1e0d9; --border: rgba(11,11,11,0.10);
+    --accent: #e34948; --accent-ink: #ffffff; --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --surface-1: #1a1a19; --page: #0d0d0d; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+      --text-muted: #898781; --hairline: #2c2c2a; --border: rgba(255,255,255,0.10);
+      --accent: #e66767; --accent-ink: #1a1a19; --card: #1f1f1e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 26px; letter-spacing: -0.02em; margin: 0 0 8px; }
+  p.sub { color: var(--text-secondary); margin: 0 0 28px; }
+
+  .gate { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; max-width: 380px; }
+  .gate label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .gate input {
+    width: 100%; margin-top: 8px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--surface-1); color: var(--text-primary); font-size: 15px;
+  }
+  .gate button, .refresh {
+    margin-top: 14px; background: var(--accent); color: var(--accent-ink); border: none;
+    padding: 12px 20px; border-radius: 100px; font-weight: 700; font-size: 15px; cursor: pointer;
+  }
+  .gate-error { color: var(--accent); font-size: 14px; margin-top: 10px; display: none; }
+
+  #panel { display: none; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .count { color: var(--text-muted); font-size: 14px; }
+
+  .row {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 20px; margin-bottom: 12px;
+  }
+  .row .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .row .name { font-weight: 700; font-size: 15px; }
+  .row .meta { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+  .row dl { margin: 12px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 14px; }
+  .row dt { color: var(--text-muted); }
+  .row dd { margin: 0; color: var(--text-primary); word-break: break-word; }
+  .row .notes { grid-column: 1 / -1; font-style: italic; color: var(--text-secondary); margin-top: 4px; }
+
+  .del {
+    background: transparent; border: 1px solid var(--border); color: var(--accent);
+    padding: 7px 14px; border-radius: 100px; font-size: 13px; font-weight: 700; cursor: pointer; flex: none;
+  }
+  .del:disabled { opacity: 0.5; cursor: default; }
+  .empty { color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>nonomo — admin</h1>
+  <p class="sub">View and manage pledge submissions. This page is not linked from the public site.</p>
+
+  <div class="gate" id="gate">
+    <label for="pw">Admin password</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••">
+    <br>
+    <button id="unlock">Unlock</button>
+    <p class="gate-error" id="gateError">Wrong password.</p>
+  </div>
+
+  <div id="panel">
+    <div class="toolbar">
+      <span class="count" id="count"></span>
+      <button class="refresh" id="refresh">Refresh</button>
+    </div>
+    <div id="rows"></div>
+  </div>
+</div>
+
+<script>
+  var pw = sessionStorage.getItem('nonomo_admin_pw') || '';
+
+  function fmtDate(iso) {
+    return new Date(iso).toLocaleString();
+  }
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str == null ? '' : str;
+    return div.innerHTML;
+  }
+
+  function render(pledges) {
+    var rows = document.getElementById('rows');
+    document.getElementById('count').textContent = pledges.length + (pledges.length === 1 ? ' pledge' : ' pledges');
+    if (pledges.length === 0) {
+      rows.innerHTML = '<p class="empty">No pledges yet.</p>';
+      return;
+    }
+    rows.innerHTML = pledges.map(function (p) {
+      var notesHtml = p.notes ? '<div class="notes">"' + escapeHtml(p.notes) + '"</div>' : '';
+      return (
+        '<div class="row" data-id="' + escapeHtml(p.id) + '">' +
+          '<div class="top">' +
+            '<div>' +
+              '<div class="name">' + escapeHtml(p.name) + '</div>' +
+              '<div class="meta">' + fmtDate(p.createdAt) + '</div>' +
+            '</div>' +
+            '<button class="del">Delete</button>' +
+          '</div>' +
+          '<dl>' +
+            '<dt>Country</dt><dd>' + escapeHtml(p.location) + '</dd>' +
+            '<dt>Email</dt><dd>' + escapeHtml(p.email) + '</dd>' +
+            (notesHtml ? '<dt>Notes</dt><dd class="notes-inline">' + escapeHtml(p.notes) + '</dd>' : '') +
+          '</dl>' +
+        '</div>'
+      );
+    }).join('');
+
+    Array.prototype.forEach.call(rows.querySelectorAll('.del'), function (btn) {
+      btn.addEventListener('click', function () {
+        var row = btn.closest('.row');
+        var id = row.getAttribute('data-id');
+        if (!confirm('Delete this pledge? This cannot be undone.')) return;
+        btn.disabled = true;
+        btn.textContent = 'Deleting…';
+        fetch('/.netlify/functions/admin-delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': pw },
+          body: JSON.stringify({ id: id })
+        })
+          .then(function (res) { if (!res.ok) throw new Error(); return res.json(); })
+          .then(function () { row.remove(); })
+          .catch(function () {
+            alert('Could not delete — try refreshing.');
+            btn.disabled = false;
+            btn.textContent = 'Delete';
+          });
+      });
+    });
+  }
+
+  function load() {
+    document.getElementById('rows').innerHTML = '<p class="empty">Loading…</p>';
+    fetch('/.netlify/functions/admin-list', {
+      headers: { 'x-admin-password': pw }
+    })
+      .then(function (res) {
+        if (res.status === 401) throw new Error('unauthorized');
+        return res.json();
+      })
+      .then(function (data) {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+        render(data.pledges || []);
+      })
+      .catch(function () {
+        sessionStorage.removeItem('nonomo_admin_pw');
+        pw = '';
+        document.getElementById('gateError').style.display = 'block';
+      });
+  }
+
+  document.getElementById('unlock').addEventListener('click', function () {
+    pw = document.getElementById('pw').value;
+    sessionStorage.setItem('nonomo_admin_pw', pw);
+    document.getElementById('gateError').style.display = 'none';
+    load();
+  });
+  document.getElementById('pw').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('unlock').click();
+  });
+  document.getElementById('refresh').addEventListener('click', load);
+
+  if (pw) load();
+</script>
+</body>
+</html>
