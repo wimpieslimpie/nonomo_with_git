@@ -19,8 +19,12 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400 });
   }
 
-  // Honeypot: real visitors never fill this hidden field.
-  if (data.website) {
+  // Honeypot: real visitors never fill this hidden field. But browser autofill
+  // sometimes fills hidden fields too, so only treat it as spam when paired with
+  // a submission that's too fast for a human to have actually filled the form —
+  // a real visitor who got autofilled still takes time to review and click submit.
+  const formMs = Number(data.formMs);
+  if (data.hp_check_2x9 && (!Number.isFinite(formMs) || formMs < 1500)) {
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
   }
 

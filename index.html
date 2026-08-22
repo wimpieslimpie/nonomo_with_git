@@ -314,8 +314,8 @@
           <textarea id="notes" name="notes" placeholder="Optional"></textarea>
         </div>
         <div class="hp-field" aria-hidden="true">
-          <label for="website">Leave this empty</label>
-          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          <label for="hp_check_2x9">Leave this empty</label>
+          <input id="hp_check_2x9" name="hp_check_2x9" type="text" tabindex="-1" autocomplete="off">
         </div>
         <button type="submit" class="btn-primary" id="pledgeSubmit" style="margin-top:6px;">Sign the pledge</button>
         <p class="pledge-error" id="pledgeError"></p>
@@ -354,6 +354,7 @@
   var form = document.getElementById('pledgeForm');
   var errorEl = document.getElementById('pledgeError');
   var submitBtn = document.getElementById('pledgeSubmit');
+  var formRenderedAt = Date.now();
 
   function escapeHtml(str) {
     var div = document.createElement('div');
@@ -456,7 +457,8 @@
       location: document.getElementById('location').value.trim(),
       email: document.getElementById('email').value.trim(),
       notes: document.getElementById('notes').value.trim(),
-      website: document.getElementById('website').value // honeypot
+      hp_check_2x9: document.getElementById('hp_check_2x9').value, // honeypot
+      formMs: Date.now() - formRenderedAt
     };
 
     submitBtn.disabled = true;
