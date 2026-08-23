@@ -81,7 +81,10 @@
   <div id="panel">
     <div class="toolbar">
       <span class="count" id="count"></span>
-      <button class="refresh" id="refresh">Refresh</button>
+      <span>
+        <button class="refresh" id="scrub" style="background:transparent;color:var(--accent);border:1px solid var(--border);">Scrub old emails</button>
+        <button class="refresh" id="refresh">Refresh</button>
+      </span>
     </div>
     <div id="rows"></div>
   </div>
@@ -180,6 +183,26 @@
     if (e.key === 'Enter') document.getElementById('unlock').click();
   });
   document.getElementById('refresh').addEventListener('click', load);
+  document.getElementById('scrub').addEventListener('click', function () {
+    if (!confirm('Mask the full email on every pledge that still has one stored in plaintext? This cannot be undone.')) return;
+    var btn = document.getElementById('scrub');
+    btn.disabled = true;
+    btn.textContent = 'Scrubbing…';
+    fetch('/.netlify/functions/admin-scrub-emails', {
+      method: 'POST',
+      headers: { 'x-admin-password': pw }
+    })
+      .then(function (res) { if (!res.ok) throw new Error(); return res.json(); })
+      .then(function (data) {
+        alert('Masked ' + data.scrubbed + ' of ' + data.total + ' pledges.');
+        load();
+      })
+      .catch(function () { alert('Could not scrub — try again.'); })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Scrub old emails';
+      });
+  });
 
   if (pw) load();
 </script>

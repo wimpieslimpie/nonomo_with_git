@@ -9,16 +9,6 @@ function maskName(name) {
   return `${first} ${lastInitial}.`;
 }
 
-function maskEmail(email) {
-  const at = String(email).indexOf('@');
-  if (at < 1) return '•••';
-  const local = email.slice(0, at);
-  const domain = email.slice(at + 1);
-  const visible = local.slice(0, 2);
-  const dots = '•'.repeat(Math.max(3, local.length - visible.length));
-  return `${visible}${dots}@${domain}`;
-}
-
 export default async () => {
   const store = getStore('pledges');
   const { blobs } = await store.list();
@@ -31,7 +21,7 @@ export default async () => {
       name: maskName(r.name),
       location: r.location,
       notes: r.notes,
-      email: maskEmail(r.email),
+      email: r.email,
       createdAt: r.createdAt,
     }));
 

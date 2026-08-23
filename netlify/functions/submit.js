@@ -2,6 +2,18 @@ import { getStore } from '@netlify/blobs';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// We never store the full email — only a masked version — so there's nothing
+// sensitive to leak even from our own database.
+function maskEmail(email) {
+  const at = email.indexOf('@');
+  if (at < 1) return '•••';
+  const local = email.slice(0, at);
+  const domain = email.slice(at + 1);
+  const visible = local.slice(0, 2);
+  const dots = '•'.repeat(Math.max(3, local.length - visible.length));
+  return `${visible}${dots}@${domain}`;
+}
+
 // Must match the <select> options in index.html exactly. Validated here too — not just
 // in the browser — so the privacy guarantee (country only, nothing more precise) can't
 // be bypassed by posting directly to this endpoint instead of using the form.
@@ -45,7 +57,7 @@ export default async (req) => {
 
   const store = getStore('pledges');
   const id = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-  const record = { id, name, location, email, notes, createdAt: new Date().toISOString() };
+  const record = { id, name, location, email: maskEmail(email), notes, createdAt: new Date().toISOString() };
 
   await store.setJSON(id, record);
 
