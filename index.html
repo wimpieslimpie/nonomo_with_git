@@ -188,6 +188,16 @@
   .wall-empty, .wall-loading { color: var(--text-muted); font-size: 15px; margin-top: 20px; }
   .wall-count { color: var(--text-muted); font-size: 13px; margin-top: 14px; }
 
+  /* Latest news */
+  .news-list { display: grid; gap: 12px; margin-top: 24px; }
+  .news-item { display: block; text-decoration: none; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; }
+  .news-item:hover { border-color: var(--text-muted); }
+  .news-item .meta { color: var(--text-muted); font-size: 13px; }
+  .news-item .meta .place { font-weight: 700; color: var(--text-secondary); }
+  .news-item .title { font-weight: 700; font-size: 16px; margin-top: 4px; line-height: 1.35; }
+  .news-all { display: inline-block; margin-top: 18px; font-weight: 700; color: var(--accent); font-size: 15px; text-decoration: none; }
+  .news-all::after { content: " →"; }
+
   footer { padding: 40px 0 60px; border-top: 1px solid var(--hairline); }
   footer p { color: var(--text-muted); font-size: 13px; }
 </style>
@@ -198,6 +208,7 @@
   <nav class="top">
     <div class="brand"><span class="dot"></span> nonomo</div>
     <div class="nav-links">
+      <a class="nav-link" href="/news.html">News</a>
       <a class="nav-link" href="#wall">Voices</a>
       <a class="cta" href="#pledge">Join the pledge</a>
     </div>
@@ -272,6 +283,15 @@
         <div class="desc">Police run spot checks on popular motorcycle routes, with on-the-spot fines for bikes over the limit.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="news" style="display:none;">
+  <div class="wrap">
+    <h2>Latest news</h2>
+    <p>Fines, noise radars and crackdowns from around the world.</p>
+    <div class="news-list" id="newsList"></div>
+    <a class="news-all" href="/news.html">All news</a>
   </div>
 </section>
 
@@ -488,6 +508,25 @@
   });
 
   loadWall();
+
+  // Latest 3 news posts; the section stays hidden if news.json can't be loaded.
+  fetch('/news.json')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      var posts = (data.posts || []).slice().sort(function (a, b) { return b.date.localeCompare(a.date); }).slice(0, 3);
+      if (posts.length === 0) return;
+      document.getElementById('newsList').innerHTML = posts.map(function (p) {
+        var date = new Date(p.date + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        return (
+          '<a class="news-item" href="/news.html#' + escapeHtml(p.id) + '">' +
+            '<div class="meta"><span class="place">' + escapeHtml(p.place) + '</span> · ' + date + '</div>' +
+            '<div class="title">' + escapeHtml(p.title) + '</div>' +
+          '</a>'
+        );
+      }).join('');
+      document.getElementById('news').style.display = '';
+    })
+    .catch(function () {});
 </script>
 
 </body>

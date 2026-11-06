@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News — nonomo</title>
+<meta name="description" content="News on how cities and countries are tackling motorcycle and moped noise: fines, noise radars, bans and enforcement.">
+<style>
+  :root {
+    color-scheme: light;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --hairline:       #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --accent:         #e34948;
+    --accent-ink:     #ffffff;
+    --card:           #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --hairline:       #2c2c2a;
+      --border:         rgba(255,255,255,0.10);
+      --accent:         #e66767;
+      --accent-ink:     #1a1a19;
+      --card:           #1f1f1e;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page); color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  nav.top { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
+  .nav-links { display: flex; align-items: center; gap: 20px; }
+  .nav-link { text-decoration: none; color: var(--text-secondary); font-weight: 600; font-size: 14px; }
+  .nav-link.active { color: var(--text-primary); }
+  nav.top a.cta {
+    background: var(--accent); color: var(--accent-ink); text-decoration: none;
+    padding: 9px 16px; border-radius: 100px; font-weight: 600; font-size: 14px;
+  }
+
+  header.page { padding: 48px 0 32px; }
+  header.page h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 14px; font-weight: 800; }
+  header.page h1 .accent { color: var(--accent); }
+  header.page p { font-size: clamp(16px, 2.2vw, 19px); color: var(--text-secondary); max-width: 620px; margin: 0; }
+
+  .posts { display: grid; gap: 16px; padding-bottom: 56px; }
+  article.post { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .post-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; color: var(--text-muted); font-size: 13px; }
+  .post-meta .place { font-weight: 700; color: var(--text-secondary); }
+  .post-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+  .post-label { background: color-mix(in srgb, var(--accent) 12%, var(--card)); color: var(--accent); font-weight: 700; font-size: 12px; padding: 2px 9px; border-radius: 100px; }
+  article.post h2 { font-size: clamp(20px, 3vw, 24px); letter-spacing: -0.02em; line-height: 1.25; margin: 10px 0 10px; font-weight: 800; }
+  article.post p { color: var(--text-secondary); font-size: 16px; margin: 0; max-width: 680px; }
+  .why { margin-top: 14px !important; padding-left: 14px; border-left: 3px solid var(--accent); color: var(--text-primary) !important; }
+  .why strong { font-weight: 700; }
+  .source { margin-top: 14px !important; font-size: 14px !important; color: var(--text-muted) !important; }
+  .source a { color: var(--text-secondary); font-weight: 600; }
+  .posts-status { color: var(--text-muted); font-size: 15px; }
+
+  .cta-band { border-top: 1px solid var(--hairline); padding: 48px 0; }
+  .cta-band h2 { font-size: clamp(22px, 3vw, 28px); letter-spacing: -0.02em; margin: 0 0 10px; font-weight: 800; }
+  .cta-band p { color: var(--text-secondary); font-size: 17px; margin: 0 0 22px; max-width: 600px; }
+  .btn-primary { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 700; padding: 14px 26px; border-radius: 100px; font-size: 16px; }
+
+  footer { padding: 40px 0 60px; border-top: 1px solid var(--hairline); }
+  footer p { color: var(--text-muted); font-size: 13px; }
+  @media (max-width: 480px) { .nav-links { gap: 14px; } article.post { padding: 20px 18px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="top">
+    <a class="brand" href="/"><span class="dot"></span> nonomo</a>
+    <div class="nav-links">
+      <a class="nav-link active" href="/news.html">News</a>
+      <a class="nav-link" href="/#wall">Voices</a>
+      <a class="cta" href="/#pledge">Join the pledge</a>
+    </div>
+  </nav>
+</div>
+
+<header class="page">
+  <div class="wrap">
+    <h1>News on the fight against <span class="accent">motor noise.</span></h1>
+    <p>Fines, noise radars, bans and crackdowns: how cities and countries around the world are starting to enforce the noise limits that already exist.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="posts" id="posts">
+    <p class="posts-status">Loading…</p>
+  </div>
+</main>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Want this in your city too?</h2>
+    <p>Every signature makes it easier to ask local governments to enforce the limits they already have.</p>
+    <a class="btn-primary" href="/#pledge">Sign the pledge</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>nonomo — no noisy motors. An international movement against motor noise, starting with loud motorcycle and moped exhausts.</p>
+  </div>
+</footer>
+
+<script>
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str == null ? '' : str;
+    return div.innerHTML;
+  }
+  function formatDate(iso) {
+    return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  fetch('/news.json')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      var posts = (data.posts || []).slice().sort(function (a, b) { return b.date.localeCompare(a.date); });
+      var el = document.getElementById('posts');
+      if (posts.length === 0) { el.innerHTML = '<p class="posts-status">No news yet.</p>'; return; }
+      el.innerHTML = posts.map(function (p) {
+        var label = p.label ? '<span class="post-label">' + escapeHtml(p.label) + '</span>' : '';
+        return (
+          '<article class="post" id="' + escapeHtml(p.id) + '">' +
+            '<div class="post-meta"><span class="place">' + escapeHtml(p.place) + '</span><span class="sep"></span>' +
+              '<time datetime="' + escapeHtml(p.date) + '">' + formatDate(p.date) + '</time>' + label + '</div>' +
+            '<h2>' + escapeHtml(p.title) + '</h2>' +
+            '<p>' + escapeHtml(p.body) + '</p>' +
+            '<p class="why"><strong>Why it matters:</strong> ' + escapeHtml(p.why) + '</p>' +
+            '<p class="source">Source: <a href="' + escapeHtml(p.source.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.source.name) + '</a></p>' +
+          '</article>'
+        );
+      }).join('');
+      if (location.hash) {
+        var target = document.getElementById(location.hash.slice(1));
+        if (target) target.scrollIntoView();
+      }
+    })
+    .catch(function () {
+      document.getElementById('posts').innerHTML = '<p class="posts-status">Couldn\'t load the news right now — refresh to try again.</p>';
+    });
+</script>
+
+</body>
+</html>

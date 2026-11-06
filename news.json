@@ -1,0 +1,41 @@
+{
+  "posts": [
+    {
+      "id": "dubai-october-2026",
+      "date": "2026-11-06",
+      "place": "Dubai, UAE",
+      "title": "Dubai impounds 218 vehicles for noise in October",
+      "body": "Dubai Police impounded 218 vehicles and issued 518 fines for noise violations in October, including drivers who rev their engines on purpose to make noise. They use smart monitoring devices alongside patrol teams. A noisy vehicle costs a Dh2,000 fine (about €500) and 12 traffic points, and getting an impounded vehicle back costs another Dh10,000. Police plan to add more noise-detection devices.",
+      "why": "Enforcement works when it actually happens, and the police explicitly cite the sleep and health of children, the elderly and the sick.",
+      "source": { "name": "Gulf News", "url": "https://gulfnews.com/uae/dubai/dubai-police-seize-218-vehicles-issue-518-fines-in-noise-crackdown-1.500738290" }
+    },
+    {
+      "id": "tyrol-season-2026",
+      "date": "2026-10-31",
+      "place": "Tyrol, Austria",
+      "title": "Tyrol closes another season of its ban on loud motorcycles",
+      "body": "On 31 October, Tyrol's seasonal ban on motorcycles with a stationary noise level above 95 dB(A) ended for the year on popular mountain routes. Riders who break it face fines of up to €220 and can be turned back by police. The ban runs every year from 15 April to 31 October.",
+      "why": "A clear, measurable limit, without banning motorcycling itself.",
+      "source": { "name": "ADAC", "url": "https://www.adac.de/news/tirol-fahrverbote-motorraeder/" }
+    },
+    {
+      "id": "navi-mumbai-silencers-2026",
+      "date": "2026-10-14",
+      "place": "Navi Mumbai, India",
+      "title": "Navi Mumbai crushes 93 illegal exhausts",
+      "body": "On 14 October, traffic police in Navi Mumbai used a road roller to destroy 93 seized, modified motorcycle silencers. Residents had complained for months about noise early in the morning and late at night. Police urged riders to remove illegal silencers themselves and warned the garages that fit them.",
+      "why": "The crackdown targets not just riders, but also the shops that sell and fit loud exhausts.",
+      "source": { "name": "Newsband", "url": "https://www.newsband.in/article_detail/city-police-crush-93-illegal-bike-silencers" }
+    },
+    {
+      "id": "brussels-checks-2025",
+      "date": "2026-10-01",
+      "place": "Brussels, Belgium",
+      "label": "Background",
+      "title": "Brussels: 35% of motorcycles checked broke the rules",
+      "body": "Since 2024, Brussels Mobility and the police have been checking the noise levels of motorcycles and scooters. In the 2025 checks, 35% of motorcycles were in violation. Yet as of mid-2026, not a single noise radar has been approved for automatic fines.",
+      "why": "One in three. The problem is real, and the tools to enforce the law still aren't in place.",
+      "source": { "name": "Brussels Environment", "url": "https://leefmilieu.brussels/burgers/documentatie-en-tools/leefmilieu-stand-van-zaken/weglawaai-metingen-en-acties" }
+    }
+  ]
+}
