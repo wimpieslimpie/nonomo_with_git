@@ -47,6 +47,11 @@
   .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
   .nav-links { display: flex; align-items: center; gap: 20px; }
   .nav-link { text-decoration: none; color: var(--text-secondary); font-weight: 600; font-size: 14px; }
+  .nav-fb { display: inline-flex; align-items: center; color: var(--text-secondary); }
+  .nav-fb:hover { color: var(--text-primary); }
+  .nav-fb svg { width: 20px; height: 20px; fill: currentColor; }
+  nav.top { gap: 16px; }
+  nav.top a.cta { white-space: nowrap; }
   .nav-link.active { color: var(--text-primary); }
   nav.top a.cta {
     background: var(--accent); color: var(--accent-ink); text-decoration: none;
@@ -83,6 +88,9 @@
   .footer-social:hover { color: var(--text-primary); }
   .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
   @media (max-width: 480px) { .nav-links { gap: 14px; } article.post { padding: 20px 18px; } }
+  /* Menu on small screens (kept last so it wins over the base rules) */
+  @media (max-width: 480px) { nav.top .nav-voices { display: none; } nav.top .nav-links { gap: 14px; } nav.top .nav-links a.cta { padding: 8px 14px; } }
+  @media (max-width: 360px) { .wrap { padding: 0 16px; } nav.top .brand { font-size: 16px; } nav.top .nav-links { gap: 10px; } nav.top .nav-links a.cta { padding: 7px 11px; font-size: 13px; } }
 </style>
 </head>
 <body>
@@ -92,7 +100,8 @@
     <a class="brand" href="/"><span class="dot"></span> nonomo</a>
     <div class="nav-links">
       <a class="nav-link active" href="/news.html">News</a>
-      <a class="nav-link" href="/#wall">Voices</a>
+      <a class="nav-link nav-voices" href="/#wall">Voices</a>
+      <a class="nav-fb" href="https://www.facebook.com/profile.php?id=61596339748834" target="_blank" rel="noopener" aria-label="nonomo on Facebook" title="nonomo on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.88 11.85v-8.38H7.08V12h3.04V9.36c0-3 1.79-4.67 4.53-4.67 1.31 0 2.68.24 2.68.24v2.95h-1.51c-1.49 0-1.95.93-1.95 1.87V12h3.32l-.53 3.47h-2.79v8.38A12 12 0 0 0 24 12z"/></svg></a>
       <a class="cta" href="/#pledge">Join the pledge</a>
     </div>
   </nav>
