@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>nonomo — no noisy motors</title>
-<meta name="description" content="nonomo is an international movement against motor noise, starting with loud motorcycle and moped exhausts. Sign the pledge.">
+<meta name="description" content="nonomo is an international movement against motor noise, starting with loud motorcycle and moped exhausts. Sign the petition.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nonomo">
 <meta property="og:url" content="https://nonomo.org/">
 <meta property="og:title" content="nonomo — no noisy motors">
-<meta property="og:description" content="An international movement against motor noise, starting with loud motorcycle and moped exhausts. Sign the pledge.">
+<meta property="og:description" content="An international movement against motor noise, starting with loud motorcycle and moped exhausts. Sign the petition.">
 <meta property="og:image" content="https://nonomo.org/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -246,7 +246,7 @@
       <a class="nav-link" href="/news.html">News</a>
       <a class="nav-link nav-voices" href="#wall">Voices</a>
       <a class="nav-fb" href="https://www.facebook.com/nonomo.org" target="_blank" rel="noopener" aria-label="nonomo on Facebook" title="nonomo on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.88 11.85v-8.38H7.08V12h3.04V9.36c0-3 1.79-4.67 4.53-4.67 1.31 0 2.68.24 2.68.24v2.95h-1.51c-1.49 0-1.95.93-1.95 1.87V12h3.32l-.53 3.47h-2.79v8.38A12 12 0 0 0 24 12z"/></svg></a>
-      <a class="cta" href="#pledge">Join the pledge</a>
+      <a class="cta" href="#pledge">Sign the petition</a>
     </div>
   </nav>
 </div>
@@ -256,7 +256,7 @@
     <h1>No noisy<br><span class="accent">motors.</span></h1>
     <p class="lede">nonomo is an international movement against motor noise — starting with the loudest, most avoidable offender: motorcycles and mopeds modified to be as loud as possible.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="#pledge">Sign the pledge</a>
+      <a class="btn-primary" href="#pledge">Sign the petition</a>
       <a class="btn-secondary" href="#manifesto">Read the manifesto</a>
     </div>
     <a class="hero-teaser" href="#wall" id="heroTeaser" style="display:none;">
@@ -293,7 +293,7 @@
           <p class="quiet">Motorcycles and mopeds are a disproportionate part of the noise problem — not because there are more of them, but because a single loud motorcycle can be louder than dozens of ordinary cars combined, and because so many riders modify their exhausts specifically to be louder than the law allows. Legal limits already exist in most countries, generally somewhere between 80 and 95 decibels depending on jurisdiction. Modified pipes routinely blow past them. Enforcement, until recently, has mostly meant nothing at all.</p>
           <p class="quiet">That is starting to change, and it proves the fight is winnable. Cities are now measuring and fining noise automatically — proof that the tools already exist. What's been missing is the will to use them everywhere, consistently.</p>
           <p class="quiet"><strong>nonomo exists to build that will.</strong> We are starting small and specific, not broad and vague: loud motorcycle and moped exhausts, in named streets and named cities, backed by the ordinances that mostly already exist and mostly go unenforced. We are not asking anyone to invent new laws first. We are asking cities to enforce the ones they have, and asking riders to accept a simple standard: modify your bike for performance, for comfort, for style — not to make yourself impossible to ignore.</p>
-          <p class="quiet"><strong>What we're asking of you:</strong> Sign the pledge. Add your voice and your country, so this reads as the international movement it's meant to be, not one person shouting into the wind. If you're a rider who agrees loud pipes aren't a personality, say so publicly; you are the most credible messenger we have.</p>
+          <p class="quiet"><strong>What we're asking of you:</strong> Sign the petition. Add your voice and your country, so this reads as the international movement it's meant to be, not one person shouting into the wind. If you're a rider who agrees loud pipes aren't a personality, say so publicly; you are the most credible messenger we have.</p>
           <p class="quiet">We are not trying to silence the road. We are trying to make it possible to sleep with your window open, hear a conversation on a terrace, and walk down a street without being ambushed by an engine that was made loud on purpose. No noisy motors. That's the whole idea. Join us.</p>
         </div>
       </details>
@@ -358,7 +358,7 @@
 <section id="pledge">
   <div class="wrap">
     <h2>Join nonomo</h2>
-    <p>Sign the pledge against noisy motors.</p>
+    <p>Sign the petition against noisy motors.</p>
     <div class="pledge-card">
       <form class="pledge" id="pledgeForm">
         <div>
@@ -383,7 +383,7 @@
           <label for="hp_check_2x9">Leave this empty</label>
           <input id="hp_check_2x9" name="hp_check_2x9" type="text" tabindex="-1" autocomplete="off">
         </div>
-        <button type="submit" class="btn-primary" id="pledgeSubmit" style="margin-top:6px;">Sign the pledge</button>
+        <button type="submit" class="btn-primary" id="pledgeSubmit" style="margin-top:6px;">Sign the petition</button>
         <p class="pledge-error" id="pledgeError"></p>
       </form>
       <div class="pledge-success" id="pledgeSuccess">
@@ -496,7 +496,7 @@
         var pledges = data.pledges || [];
         updateTeasers(pledges);
         if (pledges.length === 0) {
-          listEl.innerHTML = '<p class="wall-empty">No pledges yet — be the first to sign below.</p>';
+          listEl.innerHTML = '<p class="wall-empty">No signatures yet — be the first to sign below.</p>';
           countEl.textContent = '';
           return;
         }
@@ -508,7 +508,7 @@
               '<div class="body">' +
                 '<div class="headline">' +
                   '<span class="who">' + escapeHtml(p.name) + '</span> ' +
-                  '<span class="verb">signed the pledge from</span> ' +
+                  '<span class="verb">signed the petition from</span> ' +
                   '<span class="where">' + escapeHtml(p.location) + '</span>' +
                 '</div>' +
                 notesHtml +
@@ -520,7 +520,7 @@
         countEl.textContent = pledges.length + (pledges.length === 1 ? ' person has' : ' people have') + ' signed so far.';
       })
       .catch(function () {
-        listEl.innerHTML = '<p class="wall-empty">Couldn\'t load pledges right now — refresh to try again.</p>';
+        listEl.innerHTML = '<p class="wall-empty">Couldn\'t load signatures right now — refresh to try again.</p>';
       });
   }
 
@@ -560,7 +560,7 @@
         errorEl.textContent = err.message || 'Something went wrong — please try again.';
         errorEl.style.display = 'block';
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Sign the pledge';
+        submitBtn.textContent = 'Sign the petition';
       });
   });
 
@@ -590,7 +590,7 @@
   // Share buttons shown after signing
   (function () {
     var url = 'https://nonomo.org/';
-    var text = 'I just signed the nonomo pledge against loud motorcycle and moped exhausts. Join me:';
+    var text = 'I just signed the nonomo petition against loud motorcycle and moped exhausts. Join me:';
     var enc = encodeURIComponent;
     document.getElementById('shareWa').href = 'https://wa.me/?text=' + enc(text + ' ' + url);
     document.getElementById('shareFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc(url);
